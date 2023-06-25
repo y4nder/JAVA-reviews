@@ -61,9 +61,15 @@ public class PokemonList{
         System.out.println();
     }
     
-    public Pokemon addPokemon(){
-        if(counter < MAX) return new Pokemon();
-        else return null;
+    public Pokemon addPokemon(int x){
+        if(x == 1){
+            if(counter < MAX) return new Pokemon();
+            else return null;
+        }
+        else{
+            if(counterEv < MAX) return new Pokemon("", "", 0, "", "", "" );
+        }
+        return null; 
     }
 
     public boolean insertSorted(Pokemon pokemon){
@@ -116,29 +122,52 @@ public class PokemonList{
                 return i;
             }
         }
+        for(int i = 0; i < counterEv; i++){
+            if(name.equalsIgnoreCase(evolvedPokemons[i].getPokemonName())){
+                return counter + i;
+            }            
+        }
         return -1;
     }
 
     public Pokemon getIndex(int i){
-        if(i != -1) return pokemonList[i];
+        if(i != -1){
+            if(i < counter)
+                return pokemonList[i];
+            else 
+                return evolvedPokemons[ i - counter];
+        }
         else return null; 
     }
 
     public boolean delete(Pokemon pokemon){
         if(pokemon != null){
             int i = findPokemon(pokemon.getPokemonName());
-            for( ; i < counter-1; i++){
-                pokemonList[i] = pokemonList[i+1];
+            if(i < counter){
+                for( ; i < counter-1; i++){
+                    pokemonList[i] = pokemonList[i+1];
+                }
+                counter--;
+                return true;
             }
-            counter--;
-            return true;
+            else{
+                i = i - counter;
+                for( ; i < counterEv - 1; i++){
+                    evolvedPokemons[i] = evolvedPokemons[i+1];
+                }
+                counterEv--;
+                return true;
+            }
         }
         else return false;
     }
 
     public Pokemon getAt(int i){
-        if(i < counter + 1){
-            return pokemonList[i-1];
+        if(i <= (counterEv + counter) ){
+            if (i >= 0 && i <= counter) 
+                return pokemonList[i-1];
+            else 
+                return evolvedPokemons[i - (counter + 1)];
         }
         else{
             return null;
@@ -152,4 +181,16 @@ public class PokemonList{
         System.out.println("Level: " + pokemonList[i-1].getPokemonLevel());
         System.out.println("Rarity: " + pokemonList[i-1].getPokemonRarity());
     }
+    public void showEvolvedPokemonDetails(Pokemon pokemon){
+        System.out.println("----------- POKEMON INFO ------------------");
+        System.out.println("Pokemon name: " + pokemon.getPokemonName());
+        System.out.println("Type: " + pokemon.getPokemonType());
+        System.out.println("Level: " + pokemon.getPokemonLevel());
+        System.out.println("Rarity: " + pokemon.getPokemonRarity());
+    }
+
+    public int getCount(){
+        return counter;
+    }
+
 }

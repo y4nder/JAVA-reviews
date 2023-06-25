@@ -35,15 +35,38 @@ public class PokemonDriver {
             option = scan.next().toUpperCase().charAt(0);
             switch(option){
                 case '1': 
-                    System.out.println("Show Pokedex\n");
-                    p1.viewPokedex();
+                    char op;
+                    do{
+                        System.out.println("\n--> show pokedex\n");
+                        p1.viewPokedex();
+                        System.out.println("    ------");
+                        System.out.println("--  [D] Discard a Pokemon");
+                        System.out.println("--  [x] back <-");
+                        op = scan.next().toUpperCase().charAt(0);
+                        switch(op){
+                            case 'D': 
+                                if(p1.getPokemonCount() > 0){
+                                    System.out.print("name of pokemon to DISCARD: ");
+                                    String name = scan.next();
+                                    if (p1.discardMyPokemon(p1.findPokemon(name)) == true)
+                                        System.out.println(name.toUpperCase() + " was discarded from your pokedex");
+                                    else System.out.println(name + " is not in your pokedex");
+                                }
+                                else System.out.println("YOU DO NOT OWN ANY POKEMONS YET!");
+
+                                break;
+                            case 'X': break;
+                        }
+                        
+                    }
+                    while(op != 'X');
                     break;
 
                 case '2':
                     char opt;
                     do{
-                        System.out.println("Catch Pokemon");
-                        System.out.println("Pokeballs: " + p1.getTrainerPokeballs());
+                        System.out.println("\n--> Catch Pokemon");
+                        System.out.println("Pokeballs: " + p1.getTrainerPokeballs() + "\n");
                         System.out.println("    [1] Catch 1x");
                         System.out.println("    [2] Catch 10x");
                         System.out.println("    [3] Pokedex");
@@ -137,7 +160,11 @@ public class PokemonDriver {
                     break;
 
                 case '2':
-                    if(list.insertSorted(list.addPokemon()) == true)
+                    System.out.println("    --> Evolved or Normal?");
+                    System.out.println("    [1] Normal");
+                    System.out.println("    [2] Evolved");
+                    int x = scan.nextInt();
+                    if(list.insertSorted(list.addPokemon(x)) == true)
                         System.out.println("Pokemon Created!");
                     else System.out.println("List of pokemons is already full!");
                     break;
@@ -148,7 +175,10 @@ public class PokemonDriver {
                     int x = scan.nextInt();
                     if( list.getAt(x) == null) 
                         System.out.println("No Pokemon at that index");
-                    else list.showPokemonDetails(x);
+                    else {
+                        if( x > list.getCount() ) list.showEvolvedPokemonDetails(list.getAt(x));
+                        else list.showPokemonDetails(x);
+                    }
                     break;
 
                 case '4':
@@ -160,7 +190,7 @@ public class PokemonDriver {
                         System.out.println("\nREMOVED " + name.toUpperCase());
                     }
                     else System.out.println(name + " does not exist in the list");
-                    
+
                     list.displayPokemonList();
                     
                     break;

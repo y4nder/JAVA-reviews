@@ -46,7 +46,7 @@ public class Trainer {
         if(counter < MAX && pokeballs > 0){
             counter++;
             pokeballs--;
-            System.out.println(pokemon.getPokemonName() + " is caught!");
+            System.out.println(pokemon.getPokemonName() + " was caught!");
             if(counter > 1){
                 for(int i = 0; i < counter; i++){
                     if( myPokemons[i] != null && pokemon.getPokemonName().equalsIgnoreCase( myPokemons[i].getPokemonName() ) ){
@@ -116,7 +116,7 @@ public class Trainer {
     }
 
     public void viewPokedex(){
-        System.out.println("------------------ Your Pokedex -------------------------------");
+        System.out.println("------------------ YOUR POKEDEX -------------------------------");
         System.out.println("Trainer: " + trainerName);
         System.out.println("Number of Food: " + food);
         System.out.println("Number of pokeballs: " + pokeballs);
@@ -142,6 +142,25 @@ public class Trainer {
         else{
             System.out.println("No pokemons");
         }
+    }
+
+    public int findPokemon(String name){
+        for( int i = 0; i < counter; i++ ){
+            if( name.equalsIgnoreCase( myPokemons[i].getPokemonName() ) ){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public boolean discardMyPokemon(int index){
+        boolean flag = false;
+        for(int i = index; i < counter; i++){
+            myPokemons[i] = myPokemons[i+1];
+            flag = true;
+        }
+        counter--;
+        return flag;
     }
 
     //private methods
