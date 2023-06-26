@@ -17,29 +17,14 @@ public class Trainer {
     }
 
     //setter
-    public void setTrainerName(String name){
-        this.trainerName = name;
-    }
+    public void setTrainerName(String name){this.trainerName = name;}
 
     //getter
-    public String getTrainerName(){
-        return trainerName;
-    }
-
-    public int getTrainerPokeballs(){
-        return pokeballs;
-    }
-    public int getPokemonCount(){
-        return counter;
-    }
-
-    public int availableSlots(){
-        return MAX - counter;
-    }
-
-    public int getFoodCount(){
-        return food;
-    }
+    public String getTrainerName(){return trainerName;}
+    public int getTrainerPokeballs(){return pokeballs;}
+    public int getPokemonCount(){return counter;}
+    public int availableSlots(){return MAX - counter;}
+    public int getFoodCount(){return food;}
 
     //public methods
     public boolean catchPokemon(Pokemon pokemon){

@@ -169,7 +169,7 @@ public class PokemonDriver {
                     else System.out.println("List of pokemons is already full!");
                     break;
 
-                case '3':
+                /*case '3':
                     list.displayPokemonList();
                     System.out.print("enter pokemon number: ");
                     int x = scan.nextInt();
@@ -179,7 +179,7 @@ public class PokemonDriver {
                         if( x > list.getCount() ) list.showEvolvedPokemonDetails(list.getAt(x));
                         else list.showPokemonDetails(x);
                     }
-                    break;
+                    break;*/
 
                 case '4':
                     list.displayPokemonList();
