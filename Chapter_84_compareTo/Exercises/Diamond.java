@@ -29,7 +29,7 @@ class Diamond implements Comparable<Diamond>{
         int newOther = (int) (other.getCarot()*10);
 
         if(newCar != newOther){
-            return newOther - newCar;
+            return newCar - newOther;
         }
         else if(getClarity().equals(other.getClarity()) == false){
             return compareQuality(getClarity()) - (compareQuality(other.getClarity()));

@@ -81,7 +81,7 @@ public class PokemonDriver {
                                     if(p1.getTrainerPokeballs() < 0)
                                         System.out.println(p1.getTrainerName() + " ran out of pokeballs");
                                     else{
-                                        if (p1.evolveMyPokemon(list.getEvolvedPokemon(x.getPokemonName()))== true)
+                                        if (p1.evolveMyPokemon(list.getEvolvedPokemon(x.getPokemonName())))
                                             System.out.println("Your Pokemon Evolved!");
                                     }
                                 }
