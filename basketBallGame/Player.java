@@ -53,15 +53,21 @@ public class Player{
     }
 
     //simple algorithm for caluclating defense methods
+    public boolean reboundBall(){
+        double pct = Math.random()*100;
+        if((pct -= (block * 60 / 100)) < 0) return true;
+        else return false;
+    }
+
     public boolean blockShot(){
         double pct = Math.random()*100;
         if((pct -= (block * 20 / 100)) < 0) return true;
         else return false;
     }
-
-    public boolean reboundBall(){
+    
+    public boolean stealBall(){
         double pct = Math.random()*100;
-        if((pct -= (block * 60 / 100)) < 0) return true;
+        if((pct -= (steal * 12 / 100)) < 0) return true;
         else return false;
     }
     

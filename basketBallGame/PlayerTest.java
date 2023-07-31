@@ -9,7 +9,7 @@ public class PlayerTest {
         p1.setBlock(80);
         p2.setBlock(68);
         p2.setRebound(89);
-        game1.newOneVOne();
-        
+        game1.startOneVOne();
+
     }
 }
