@@ -15,7 +15,11 @@ USE PlayerTest.java for MAIN METHOD
 
 PATCHES:
 
-NewFeature/1.2 rebounding
+NewFeature/1.3 ball possesion
+    - changes on how the 1 v 1 works
+    - added a boolean ball possesion token to know which player has the ball
+
+NewFeature/1.2 rebounding 
     - Added a rebound for the 1v1 program
 
 NewFeature/ 1.1 patch
