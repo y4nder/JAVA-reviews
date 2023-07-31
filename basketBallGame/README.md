@@ -42,50 +42,46 @@ TO START A 1v1 game
 
 ------------------------------------------------------------
 Basic Mechanics
-    Shooting: 
+Shooting: 
 
-    prototype 1
-        using random int with percentages
+prototype 1
+    using random int with percentages
 
-        wide open shots:
+    wide open shots:
 
-            public boolean Shoot(){
-                double pct = Math.random()*100;
-                if((pct -= shootingRate) < 0) return true;
-                else return false;
-            }
+        public boolean Shoot(){
+            double pct = Math.random()*100;
+            if((pct -= shootingRate) < 0) return true;
+            else return false;
+        }
 
-    prototype 2
-
-                            
-
-
+prototype 2
 --------------------------------------------------------------
 Elements
-    1. Players
-        ATTRIBUTES
-        - JerseyNumber
-        - PlayerName
+1. Players
+    ATTRIBUTES
+    - JerseyNumber
+    - PlayerName
 
-        - height
-        - wingspan
-        - speed
-        - dribbling
-        - IQ
-        - Stamina
+    - height
+    - wingspan
+    - speed
+    - dribbling
+    - IQ
+    - Stamina
 
-        OFFENSE
-        - dunk rating
-        - 3pt shooting rating
-        - midrange rating
+    OFFENSE
+    - dunk rating
+    - 3pt shooting rating
+    - midrange rating
 
-        DEFENSE
-        - Block
-        - Steal
+    DEFENSE
+    - Block
+    - Steal
 
-        OFFENSIVE RATING
-        DEFENSIVE RATING
-        OVERALL RATING
+    OFFENSIVE RATING
+    DEFENSIVE RATING
+    OVERALL RATING
 
 
 
