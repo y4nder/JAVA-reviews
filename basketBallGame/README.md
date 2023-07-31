@@ -15,6 +15,9 @@ USE PlayerTest.java for MAIN METHOD
 
 PATCHES:
 
+NewFeature/1.2 rebounding
+    - Added a rebound for the 1v1 program
+
 NewFeature/ 1.1 patch
     - Added new features such as a Shooting Contest object
     - a One versus One game without defensive actions.
@@ -62,7 +65,7 @@ prototype 2
 
     block rating for players will affect the shooting chance of opponent
 
-    
+
 --------------------------------------------------------------
 Elements
 1. Players
