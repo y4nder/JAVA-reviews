@@ -57,6 +57,12 @@ prototype 1
         }
 
 prototype 2
+
+    blocking mechanics
+
+    block rating for players will affect the shooting chance of opponent
+
+    
 --------------------------------------------------------------
 Elements
 1. Players
