@@ -6,9 +6,10 @@ Author:
     incoming 2nd yr cs
 
 introduction:
-    I am going to make a 1 v 1 BasketBall.
-    - future updates maybe {3v3, 5v5}, positions, defense
-    -USE PlayerTest.java for MAIN METHOD
+
+I am going to make a 1 v 1 BasketBall.
+future updates maybe {3v3, 5v5}, positions, defense
+USE PlayerTest.java for MAIN METHOD
 
 ----------------------------------------------------------------
 
