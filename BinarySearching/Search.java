@@ -12,7 +12,7 @@ public class Search {
         while(start <= end){
             steps++;
             int mid = (start + end)/2;
-            if(a[mid] == key) return steps;
+            if(a[mid] == key) return mid;
             if(a[mid] > key) end = mid - 1;
             else start = mid + 1;
         }
