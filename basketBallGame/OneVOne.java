@@ -50,6 +50,7 @@ public class OneVOne {
             }
             
         }
+        //showing of scores after the game.
         if(scoreP1 > scoreP2) {
             System.out.println(p1.getPlayerName().toUpperCase() + " WON!");
             detailBuilder(p1.getPlayerName().toUpperCase() + " WON!");

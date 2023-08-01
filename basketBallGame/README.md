@@ -14,6 +14,8 @@ USE PlayerTest.java for MAIN METHOD
 ----------------------------------------------------------------
 
 PATCHES:
+Patch 1.3.2 ball possesion
+    - reverted to the previous hasball mechanic, too problematic lmfaoo
 
 NewFeature 1.4/ show game details
     - added a function to show what happened in the game.
