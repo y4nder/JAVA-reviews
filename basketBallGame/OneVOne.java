@@ -35,6 +35,7 @@ public class OneVOne {
         while(scoreP1 < MAX && scoreP2 < MAX){
             while(p1.hasTheBall()){
                 if(scoreP1 >= MAX) break;
+                detailBuilder(p1.getPlayerName() + " now has possession");
                 int score = ChooseActionOffense(p1, p2);
                 scoreP1 += score;
                 if(score != 0) detailBuilder("\n    current score -- " + scoreP1 + ":" + scoreP2 +"\n");
@@ -42,11 +43,11 @@ public class OneVOne {
     
             while(p2.hasTheBall()){
                 if(scoreP1 >= MAX) break;
+                detailBuilder(p2.getPlayerName() + " now has possession");
                 int score = ChooseActionOffense(p2, p1);
                 scoreP2 += score;
                 if(score != 0) detailBuilder("\n    current score -- " + scoreP1 + ":" + scoreP2 +"\n");
             }
-            
         }
         //showing of scores after the game.
         if(scoreP1 > scoreP2) {

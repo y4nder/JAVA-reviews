@@ -6,12 +6,12 @@ public class PlayerTest {
         // Player p4 = new Player("James");
 
         OneVOne game1 = new OneVOne(21);
-        game1.startOneVOne(p2,p1);
         // p1.setSteal(99999);
         // p2.setSteal(99999);
         // p1.setThreePoint(999999);
         p1.setAttributes(99, 99, 99, 99);
         p2.setAttributes(99, 99, 99, 99);
+        game1.startOneVOne(p2,p1);
         game1.showGameDetails();
     }
 }
