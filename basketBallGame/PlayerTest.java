@@ -2,15 +2,17 @@ public class PlayerTest {
     public static void main(String[] args){
         Player p1 = new Player("Doncic");
         Player p2 = new Player("Harden");
-        Player p3 = new Player("Curry");
-        Player p4 = new Player("James");
+        // Player p3 = new Player("Curry");
+        // Player p4 = new Player("James");
 
-        p1.setBlock(78);
-        p2.setBlock(72);
-
-        OneVOne game1 = new OneVOne(50);
-        game1.startOneVOne(p1,p2);
-
+        OneVOne game1 = new OneVOne(21);
+        game1.startOneVOne(p2,p1);
+        // p1.setSteal(99999);
+        // p2.setSteal(99999);
+        // p1.setThreePoint(999999);
+        p1.setAttributes(99, 99, 99, 99);
+        p2.setAttributes(99, 99, 99, 99);
+        game1.showGameDetails();
     }
 }
 

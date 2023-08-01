@@ -42,6 +42,14 @@ public class Player{
     public void setBlock(int bl){ block = bl; }
     public void setRebound(int reb){ rebound = reb; }
     public void giveBall(boolean x){ hasBall = x; }
+    public void setSteal(int stl){ steal = stl; }
+
+    public void setAttributes(int mid, int three, int bl , int stl){
+        midRange = mid;
+        threePoint = three;
+        block = bl;
+        steal = stl;
+    }
     
     //getters
     public String getPlayerName(){ return playerName; }
@@ -61,6 +69,15 @@ public class Player{
         }
         else return false;
     }
+
+    public boolean contestedMidrange(double num){
+        double pct = Math.random()*100;
+        if((pct -= midRange * (100 - num) / 100 ) < 0) {
+            totalPoints += 2;
+            return true;
+        }
+        else return false;
+    }
     
     public boolean shootThreePoint(){
         double pct = Math.random()*100;
@@ -70,6 +87,17 @@ public class Player{
         }
         else return false;
     }
+
+    public boolean contestedThreePoint(double num){
+        double pct = Math.random()*100;
+        if((pct -= threePoint * (100 - num) / 100) < 0) {
+            totalPoints += 2;
+            return true;
+        }
+        else return false;
+    }
+
+
 
     //simple algorithm for caluclating defense methods
     public boolean reboundBall(){
@@ -82,6 +110,13 @@ public class Player{
         double pct = Math.random()*100;
         if((pct -= (block * 0.2)) < 0) return true;
         else return false;
+    }
+
+    public double contestShot(){
+        double pct = Math.random()*100;
+        if((pct -= (block * 0.8) * 0.5) < 0)   
+            return pct;
+        else return -1;
     }
     
     public boolean stealBall(){

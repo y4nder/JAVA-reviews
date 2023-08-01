@@ -26,9 +26,7 @@ public class OneVOne {
     public int getScoreP1(){ return scoreP1; }
     public int getScoreP2(){ return scoreP2; }
     //setters
-    private void detailBuilder(String message){
-        detailedActions += "\n" + message;
-    }
+    private void detailBuilder(String message){ detailedActions += "\n" + message; }
 
     //game method
     public void startOneVOne(Player p1, Player p2){
@@ -37,16 +35,16 @@ public class OneVOne {
         while(scoreP1 < MAX && scoreP2 < MAX){
             while(p1.hasTheBall()){
                 if(scoreP1 >= MAX) break;
-                int score = newChooseActionOffense(p1, p2);
+                int score = ChooseActionOffense(p1, p2);
                 scoreP1 += score;
                 if(score != 0) detailBuilder("\n    current score -- " + scoreP1 + ":" + scoreP2 +"\n");
             }
     
             while(p2.hasTheBall()){
                 if(scoreP1 >= MAX) break;
-                int score = newChooseActionOffense(p2, p1);
+                int score = ChooseActionOffense(p2, p1);
                 scoreP2 += score;
-                if(score!=0) detailBuilder("\n    current score -- " + scoreP1 + ":" + scoreP2 +"\n");
+                if(score != 0) detailBuilder("\n    current score -- " + scoreP1 + ":" + scoreP2 +"\n");
             }
             
         }
@@ -65,23 +63,19 @@ public class OneVOne {
     }
 
     //offense methods
-    private int newChooseActionOffense(Player p1, Player p2){
-        switch(getRandomIntForShot()){
+    private int ChooseActionOffense(Player p1, Player p2){
+        int action = getRandomIntForShot();
+        switch(action){
             case 1: //midrange shot
                 detailBuilder(p1.getPlayerName() + " attempts a midrange shot ");
-                if(chooseActionDefense(p2, p1)){
-                    if(tryRebound(p2, p1)){
-                        swapPossession(p1, p2);
-                        return 0;
-                    }
-                    else return 0; 
-                }
-                else{
+                int defActionMid = chooseActionDefense(p2, p1, action);
+                if(defActionMid == -1) return 0; // zero points 
+                else if(defActionMid == 2) return 2; // 2 points from contested midrange
+                else if(defActionMid == 0){     
+                    //if defAction is zero it means that the defender did nothing   
                     if(p1.shootMidrange()) {
                         detailBuilder(p1.getPlayerName() + "'s midrange shot went in. +2 pt");
                         swapPossession(p1, p2);
-                        // System.out.println(p1Ball);
-                        // System.out.println(p2Ball);
                         return 2;
                     }
                     else {
@@ -93,17 +87,16 @@ public class OneVOne {
                         else return 0;
                     }
                 }
+                
+
 
             case 2: //three point shot
                 detailBuilder(p1.getPlayerName() + " attempts a three-point shot ");
-                if(chooseActionDefense(p2, p1)){ 
-                    if(tryRebound(p2, p1)){
-                        swapPossession(p1, p2);
-                        return 0;
-                    }
-                    else return 0;
-                }
-                else{                    
+                int defActionThree = chooseActionDefense(p2, p1, action);
+                if(defActionThree == -1) return 0; // zero points
+                else if(defActionThree == 3) return 3;  // 2 points from contested three point
+                else if (defActionThree == 0){
+                    //if defAction is zero it means that the defender did nothing
                     if(p1.shootThreePoint()){ 
                         detailBuilder(p1.getPlayerName() + "'s three-point shot went in. +3 pt");
                         swapPossession(p1, p2);
@@ -118,29 +111,66 @@ public class OneVOne {
                         else return 0;
                     }
                 }
+
         }
         return 0;
-
     }
 
     //defense methods
-    private boolean chooseActionDefense(Player p2, Player p1){
+    private int chooseActionDefense(Player p2, Player p1, int action){
         switch(getRandomIntForDef()){
             case 1: //block shot
                 if(p2.blockShot()){
                     detailBuilder(p2.getPlayerName() + " blocked the shot");
-                    return true;
+                    if(tryRebound(p2, p1)){ //try to rebound after blocking the shot..
+                        swapPossession(p1, p2);
+                        return -1;
+                    }
+                    else return -1; //add later chance for foul
                 }
-                else return false;
-            case 2: return false;
+                else return 0; //failed to block the shot
+            case 2: //for contesting shots
+                double pctContest = p2.contestShot();
+                switch(action){
+                    case 1: //contested midrange
+                        detailBuilder(p2.getPlayerName() + " contested the midrange shot");
+                        if (p1.contestedMidrange(pctContest)){
+                            detailBuilder(p1.getPlayerName() + " midrange shot went in +2 pt");
+                            swapPossession(p1, p2);
+                            return 2;
+                        }
+                        else{
+                            detailBuilder(p1.getPlayerName() + " missed the shot");
+                            if(tryRebound(p2, p1)){ //try to rebound after missed shot..
+                                swapPossession(p1, p2);
+                                return -1;
+                            }
+                            return -1;
+                        }
+                    case 2: //contested three point
+                        detailBuilder(p2.getPlayerName() + " contested the three point shot");
+                        if(p1.contestedThreePoint(pctContest)){
+                            detailBuilder(p1.getPlayerName() + " three point shot went in +3 pt");
+                            swapPossession(p1, p2);
+                            return 3;
+                        }
+                        else{
+                            detailBuilder(p1.getPlayerName() + " missed the shot");
+                            if(tryRebound(p2, p1)){
+                                swapPossession(p1, p2);
+                                return -1;
+                            }
+                            return -1;
+                        }
+                    case 3: return 0; //defender does nothing
+                }
         }
-        return false;
+        return 0;
     }
 
     private boolean tryRebound(Player p1, Player p2){
         if(p1.reboundBall()){
             detailBuilder(p1.getPlayerName() + " rebounds the ball");
-            swapPossession(p1, p2);
             return true;
         }
         else{
@@ -159,7 +189,7 @@ public class OneVOne {
     }
 
     private int getRandomIntForDef(){
-        return ran.nextInt(2) + 1;
+        return ran.nextInt(3) + 1;
     }
 
 

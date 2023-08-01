@@ -14,6 +14,10 @@ USE PlayerTest.java for MAIN METHOD
 ----------------------------------------------------------------
 
 PATCHES:
+
+New Feature/ Contesting shots
+    - a feature is added for contesting shots
+
 Patch 1.3.2 ball possesion
     - reverted to the previous hasball mechanic, too problematic lmfaoo
 
