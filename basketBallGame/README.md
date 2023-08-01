@@ -15,6 +15,11 @@ USE PlayerTest.java for MAIN METHOD
 
 PATCHES:
 
+NewFeature 1.4/ show game details
+    - added a function to show what happened in the game.
+    - when a tournament is finished it will only show who won.
+    - the showGameDetails() function will display what happened.
+
 Patch 1.3.1 ball possession
     - removed the hasball from the player object
     - transfereed the hasball to the one v one object.
