@@ -6,6 +6,7 @@ public class Group {
         String word;
 
         word = scan.next();
+        scan.close();
         int counter = word.length();
         char[] wordArr = new char[100];
 

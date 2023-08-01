@@ -15,6 +15,16 @@ USE PlayerTest.java for MAIN METHOD
 
 PATCHES:
 
+Patch 1.3.1 ball possession
+    - removed the hasball from the player object
+    - transfereed the hasball to the one v one object.
+
+Patch Function separation
+    - Functions for defense are now separated
+
+Patch StartONeVOne function
+    - reworked the display of currents scores
+
 NewFeature/1.3 ball possesion
     - changes on how the 1 v 1 works
     - added a boolean ball possesion token to know which player has the ball

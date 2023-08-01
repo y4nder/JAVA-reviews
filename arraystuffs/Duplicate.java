@@ -5,7 +5,7 @@ public class Duplicate{
         String word;
 
         word = scan.nextLine();
-        
+        scan.close();
         int counter = word.length();
         char[] wordArr = new char[100];
 

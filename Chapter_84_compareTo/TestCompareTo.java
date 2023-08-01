@@ -5,7 +5,7 @@ class TestCompareTo
     String appleA = new String("apple"); // these are two distinct objects 
     String appleB = new String("Apple"); // these are two distinct objects
     String berry  = new String("berry");
-    String cherry = new String("cherry");
+    //String cherry = new String("cherry");
     String A, B;
     
     A = appleA; B = appleB;

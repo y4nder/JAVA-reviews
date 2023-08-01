@@ -152,7 +152,7 @@ public class Trainer {
     private void arrange(){
         for(int i = 1; i < counter; i++){
             int j = i;
-            while(j > 0 && alphaSort(myPokemons[j-1].getPokemonName(), myPokemons[j].getPokemonName()) == true){
+            while(j > 0 && alphaSort(myPokemons[j-1].getPokemonName(), myPokemons[j].getPokemonName())){
                 swap(myPokemons, j-1, j);
                 j--;
             }
@@ -162,9 +162,9 @@ public class Trainer {
     private boolean alphaSort(String name1, String name2){
         if(name1.equalsIgnoreCase(name2)) return false;
 
-        for(int i = 0; i < name1.length() && i < name2.length(); i++){
+        for(int i = 0; i < name1.length() && i < name2.length();){
             if(name1.charAt(i) > name2.charAt(i)) return true;
-            else return false;
+            return false;
         }
 
         if(name1.length() > name2.length()) return true;

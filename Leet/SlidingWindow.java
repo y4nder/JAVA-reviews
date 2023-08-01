@@ -1,13 +1,5 @@
 public class SlidingWindow {
-    private int[] arr;
-
-    public SlidingWindow(int[] arr){
-        this.arr = arr;
-    }
-    
-    public SlidingWindow(){
-        arr = new int[20];
-    }
+    public SlidingWindow(){}
 
     public int findMaxTotal(int[] a, int k){
         int total = 0, maxTotal;

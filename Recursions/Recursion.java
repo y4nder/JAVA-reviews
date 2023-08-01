@@ -1,6 +1,4 @@
 public class Recursion {
-    private int fact = 1;
-
     public long getFact(int num){
         if(num >= 1){
             return num * getFact(num-1);

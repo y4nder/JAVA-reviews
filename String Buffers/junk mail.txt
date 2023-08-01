@@ -1,6 +1,0 @@
-dear *,
-
-hello *.
-
-* goodbye my friend.
-

@@ -2,9 +2,10 @@ import java.lang.Math;
 
 public class Player{
     private String playerName;
+    private int totalPoints;
+    private boolean hasBall;
 
     //skill ratings for scoring
-    private boolean hasBall;
     private int midRange;
     private int threePoint;
 
@@ -16,11 +17,22 @@ public class Player{
 
     public Player(String name, int mid, int three){
         playerName = name;
+        totalPoints = 0;
         midRange = mid;
         threePoint = three;
         block = 60;
         steal = 60;
         rebound = 60;
+        hasBall = false;
+    }
+
+    public Player(String name){
+        playerName = name;
+        totalPoints = 0;
+        midRange = 60;
+        threePoint = 60;
+        block = 60;
+        steal = 60;
         hasBall = false;
     }
 
@@ -38,44 +50,55 @@ public class Player{
     public int getBlock(){ return block; }
     public int getRebound() { return rebound; }
     public boolean hasTheBall(){ return hasBall; }
+    public int getTotalPoints(){ return totalPoints; }
     
     //simple algorithm for calculating scoring method
     public boolean shootMidrange(){
         double pct = Math.random()*100;
-        if((pct -= midRange) < 0) return true;
+        if((pct -= midRange) < 0) {
+            totalPoints += 2;
+            return true;
+        }
         else return false;
     }
     
     public boolean shootThreePoint(){
         double pct = Math.random()*100;
-        if((pct -= threePoint) < 0) return true;
+        if((pct -= threePoint) < 0) {
+            totalPoints += 3;
+            return true;
+        }
         else return false;
     }
 
     //simple algorithm for caluclating defense methods
     public boolean reboundBall(){
         double pct = Math.random()*100;
-        if((pct -= (block * 60 / 100)) < 0) return true;
+        if((pct -= (rebound * 0.6)) < 0) return true;
         else return false;
     }
 
     public boolean blockShot(){
         double pct = Math.random()*100;
-        if((pct -= (block * 20 / 100)) < 0) return true;
+        if((pct -= (block * 0.2)) < 0) return true;
         else return false;
     }
     
     public boolean stealBall(){
         double pct = Math.random()*100;
-        if((pct -= (steal * 12 / 100)) < 0) return true;
+        if((pct -= (steal * 0.12)) < 0) return true;
         else return false;
     }
     
 
     //displayers
     public void showPlayerDetail(){
-        System.out.println("Jersey no." + getPlayerName());
+        System.out.println("Player Name." + getPlayerName());
         System.out.println("Midrange Shot = " + getMidRange() );
         System.out.println("Three Point Shot = " + getThreePoint() );
+    }
+
+    public void showTotalPoints(){
+        System.out.println("total Points of " + getPlayerName() + " :" + getTotalPoints() );
     }
 }

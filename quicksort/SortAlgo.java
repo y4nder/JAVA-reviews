@@ -1,12 +1,8 @@
 public class SortAlgo {
-    private int[] arr;
-
     public SortAlgo(int[] arr){
-        this.arr = arr;
     }
 
     public SortAlgo(){
-        arr = new int[10];
     }
     
     //quicksorting algorithms
