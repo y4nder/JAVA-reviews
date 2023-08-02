@@ -1,10 +1,10 @@
 public class PlayerTester {
     public static void main(String[] args){
-        Player p1 = new Player("player 1");
-        Player p2 = new Player("player 2");
+        PlayerV2 p1 = new PlayerV2("James");
+        PlayerV2 p2 = new PlayerV2("Bryant");
 
-        p1.stealBall(p2);
-        System.out.println(p1.getPlayerName() + " ball: " + p1.getHasBall());
-        System.out.println(p2.getPlayerName() + " ball: " + p2.getHasBall());
+        BlacktopOnes game1 = new BlacktopOnes(11);
+        game1.startNewGame(p1, p2);
+        game1.showGameDetailes();
     }    
 }
