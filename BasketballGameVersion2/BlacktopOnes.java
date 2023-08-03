@@ -12,35 +12,6 @@ public class BlacktopOnes {
         gameDetails = "";
     }
 
-    private void ballPosession(PlayerV2 p1, PlayerV2 p2){
-        while(p1.getHasBall()){
-            if(p1.getScore() >= MAX_SCORE) return;
-            detailAdd("\n" + p1.getPlayerName() + " has possession.");
-            //try for steal
-
-            int stl = p2.stealBall(p1);
-            if(stl == 1){ detailAdd(p2.getActionDetails());
-                swapPossession(p1, p2);
-                return;
-            }
-            else if(stl == -1){detailAdd(p2.getActionDetails());
-                return;}
-
-            else{ //ball not stolen proceed to offense
-                int score = p1.chooseOffense(p2);
-                detailAdd(p1.getActionDetails());
-                if(score != 0){
-                    p1.addScore(score);
-                    detailAdd(p1.getPlayerName() + " gained " + score + "pts");
-                    detailAdd("\n      CURRENT SCORES ");
-                    showPlayerScores(p1, p2);
-                    swapPossession(p1, p2);
-                }
-            } 
-        }
-        return;
-    }
-
     public void startNewGame(PlayerV2 p1, PlayerV2 p2){
         p1.setScore(0);
         p2.setScore(0);
@@ -50,6 +21,7 @@ public class BlacktopOnes {
             if(p2.getHasBall()) ballPosession(p2, p1);
             
         }
+        //display winners
         if(p1.getScore() > p2.getScore()){
             System.out.println(p1.getPlayerName() + " won the 1v1");
             detailAdd(p1.getPlayerName() + " winner");
@@ -60,10 +32,26 @@ public class BlacktopOnes {
         }
     }
 
-    private void swapPossession(PlayerV2 p1, PlayerV2 p2){
-        p1.setHasBall(false);
-        p2.setHasBall(true);
+    private void ballPosession(PlayerV2 p1, PlayerV2 p2){
+        while(p1.getHasBall()){
+            if(p1.getScore() >= MAX_SCORE) return;
+            detailAdd("\n" + p1.getPlayerName() + " has possession.");
+            if(p2.stealBall(p1)){
+                detailAdd(p2.getActionDetails());
+                return;
+            }
+            int score = p1.chooseOffense(p2);
+            detailAdd(p1.getActionDetails());
+            if(score != 0){
+                p1.addScore(score);
+                detailAdd(p1.getPlayerName() + " gained " + score + "pts");
+                detailAdd("\n      CURRENT SCORES ");
+                showPlayerScores(p1, p2);
+            }
+        }
+        return;
     }
+
 
     private void detailAdd(String message){
         gameDetails +=  message + "\n";
@@ -81,7 +69,7 @@ public class BlacktopOnes {
     }
 
     //displayers
-    public void showGameDetailes(){
+    public void showHightlights(){
         System.out.println("SHOWING WHAT HAPPENED DURING THE GAME..");
         System.out.println(gameDetails);
     }

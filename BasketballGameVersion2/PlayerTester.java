@@ -3,8 +3,8 @@ public class PlayerTester {
         PlayerV2 p1 = new PlayerV2("James");
         PlayerV2 p2 = new PlayerV2("Bryant");
 
-        BlacktopOnes game1 = new BlacktopOnes(11);
+        BlacktopOnes game1 = new BlacktopOnes(21);
         game1.startNewGame(p1, p2);
-        game1.showGameDetailes();
+        game1.showHightlights();
     }    
 }
