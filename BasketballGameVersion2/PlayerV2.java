@@ -26,31 +26,32 @@ public class PlayerV2 {
     }
 
     //setters
-        public void setPlayerName(String name){ playerName = name; }
+    private void setPlayerName(String name){ playerName = name; }
+    private void setMidRange(int mid){ midRange = mid; }
+    public void updateMidRange(int mid){ setMidRange(mid); }
+    
+    public void setThreePoint(int three){ threePoint = three; }
 
-        public void setMidRange(int mid){ midRange = mid; }
-        public void setThreePoint(int three){ threePoint = three; }
+    public void setSteal(int stl){ steal = stl;}
+    public void setRebound(int reb){ rebound = reb; }
 
-        public void setSteal(int stl){ steal = stl;}
-        public void setRebound(int reb){ rebound = reb; }
-
-        public void setHasBall(boolean ball){ hasBall = ball; }
-        public void setScore(int num){ score = num; }
-        public void addScore(int num){ score += num; }
-        public void resetDetail(){ detailedActions = ""; }
+    public void setHasBall(boolean ball){ hasBall = ball; }
+    public void setScore(int num){ score = num; }
+    public void addScore(int num){ score += num; }
+    public void resetDetail(){ detailedActions = ""; }
 
     //getters
-        public String getPlayerName(){ return playerName; }
-        public int getStealRt(){ return steal; }
-        public boolean getHasBall(){ return hasBall; }
-        public String getActionDetails(){ return detailedActions; }
-        public int getScore(){ return score; }
+    public String getPlayerName(){ return playerName; }
+    public int getStealRt(){ return steal; }
+    public boolean getHasBall(){ return hasBall; }
+    public String getActionDetails(){ return detailedActions; }
+    public int getScore(){ return score; }
 
     //displayers
-        private void detailBuilder(String message){ detailedActions += message; }
-        public void showActions(){ System.out.println(detailedActions); }
-        public void showScore(){ System.out.println(score); }
-    
+    private void detailBuilder(String message){ detailedActions += message; }
+    public void showActions(){ System.out.println(detailedActions); }
+    public void showScore(){ System.out.println(score); }
+
     //offense 
     public int chooseOffense(PlayerV2 p2){
         resetDetail();
@@ -76,31 +77,44 @@ public class PlayerV2 {
         return 0;
     }
 
-    //midrange shot
-    private int midrangeShot(PlayerV2 p2){
-        if((getPct() - midRange) < 0){
-            detailBuilder(getPlayerName() + " midrange shot went in");
+    //shooting
+    public interface ShotStrategy {
+        int shoot(PlayerV2 p2, String shotType, int rating, int points);
+    }
+
+    public class MadeShotStrategy implements ShotStrategy {
+        public int shoot(PlayerV2 p2, String shotType, int rating, int points) {
+            detailBuilder(getPlayerName() + " " + shotType + " went in");
             gainPossession(p2);
-            return 2;
+            return points;
         }
-        else {
+    }
+
+    public class MissedShotStrategy implements ShotStrategy {
+        public int shoot(PlayerV2 p2, String shotType, int rating, int points) {
             detailBuilder(getPlayerName() + " missed.\n");
             reboundBall(p2);
             return 0;
         }
     }
 
-    private int threePoint(PlayerV2 p2){
-        if((getPct() - threePoint) < 0){
-            detailBuilder(getPlayerName() + " three-point shot went in");
-            gainPossession(p2);
-            return 3;
+    private int shoot(PlayerV2 p2, String shotType, int rating, int points){
+        ShotStrategy strategy;
+        if((getPct() - rating) < 0){
+            strategy = new MadeShotStrategy();
         }
         else {
-            detailBuilder(getPlayerName() + " missed.\n");
-            reboundBall(p2);
-            return 0;
+            strategy = new MissedShotStrategy();
         }
+        return strategy.shoot(p2, shotType, rating, points);
+    }
+
+    private int midrangeShot(PlayerV2 p2){
+        return shoot(p2, "midrange shot", midRange, 2);
+    }
+
+    private int threePoint(PlayerV2 p2){
+        return shoot(p2, "three-point shot",threePoint, 3);
     }
 
     //rebound
