@@ -37,7 +37,6 @@ class Diamond implements Comparable<Diamond>{
         else{
             return getColor() - other.getColor();
         }
-
     }
 
     private int compareQuality(String code){
