@@ -1,5 +1,7 @@
 import java.util.Random;
 public class PlayerV2 {
+    private static int Default_Midrange = 60;
+    private static int Default_ThreePoint = 60;
     private static Random ran = new Random();
     private String playerName;
     private String detailedActions;
@@ -8,25 +10,30 @@ public class PlayerV2 {
     //offense
     private int midRange;
     private int threePoint;
+    private int dunk;
+    private int layUp;
 
     //defense
     private int steal;
     private boolean hasBall;
     private int rebound;
+    private int contest;
 
     public PlayerV2(String name){
         playerName = name;
-        midRange = 60;
-        threePoint = 60;
+        midRange = Default_Midrange;
+        threePoint = Default_ThreePoint;
+        dunk = 60;
+        layUp = 60;
         steal = 60; 
         rebound = 60;
+        contest = 60;
         hasBall = false;
         detailedActions = "";
         score =  0;
     }
 
     //setters
-    private void setPlayerName(String name){ playerName = name; }
     private void setMidRange(int mid){ midRange = mid; }
     public void updateMidRange(int mid){ setMidRange(mid); }
     
@@ -43,6 +50,7 @@ public class PlayerV2 {
     //getters
     public String getPlayerName(){ return playerName; }
     public int getStealRt(){ return steal; }
+    public int getContest() { return contest; }
     public boolean getHasBall(){ return hasBall; }
     public String getActionDetails(){ return detailedActions; }
     public int getScore(){ return score; }
@@ -58,32 +66,49 @@ public class PlayerV2 {
         switch(getRandomOff()){
             case 1: return chooseShot(p2);
             case 2: 
-                detailBuilder(getPlayerName() + " dunks +2");
-                gainPossession(p2);
-                return 2;
+                detailBuilder(getPlayerName() + " drove to the basket\n");
+                return chooseLayOrDunk(p2);
         }
         return 0;
     }
 
+    //defense
+
+
     private int chooseShot(PlayerV2 p2){
+        int cont = 0;
         switch(getRandomShot()){
             case 1: 
                 detailBuilder(getPlayerName() + " attempts a midrange shot\n");
-                return midrangeShot(p2);
+                return midrangeShot(p2, cont);
             case 2:
                 detailBuilder(getPlayerName() + " attempts a three-point shot\n");
-                return threePoint(p2);
+                return threePoint(p2, cont);
+        }
+        return 0;
+    }
+
+    private int chooseLayOrDunk(PlayerV2 p2){
+        int cont = 0;
+        switch(getRandomShot()){
+            case 1: 
+                detailBuilder(getPlayerName() + " attempts a lay Up\n");
+                return layUpBall(p2, cont);
+            case 2:
+                detailBuilder(getPlayerName() + " attempts a Dunk\n");
+                return dunkBall(p2, cont);
         }
         return 0;
     }
 
     //shooting
+
     public interface ShotStrategy {
-        int shoot(PlayerV2 p2, String shotType, int rating, int points);
+        int shoot(PlayerV2 p2, String shotType,int points);
     }
 
     public class MadeShotStrategy implements ShotStrategy {
-        public int shoot(PlayerV2 p2, String shotType, int rating, int points) {
+        public int shoot(PlayerV2 p2, String shotType, int points) {
             detailBuilder(getPlayerName() + " " + shotType + " went in");
             gainPossession(p2);
             return points;
@@ -91,43 +116,99 @@ public class PlayerV2 {
     }
 
     public class MissedShotStrategy implements ShotStrategy {
-        public int shoot(PlayerV2 p2, String shotType, int rating, int points) {
+        public int shoot(PlayerV2 p2, String shotType, int points) {
             detailBuilder(getPlayerName() + " missed.\n");
             reboundBall(p2);
             return 0;
         }
     }
 
-    private int shoot(PlayerV2 p2, String shotType, int rating, int points){
+    //shooting mechanic
+    private int shoot(PlayerV2 p2, String shotType, int rating, int cntstRate, int points){ 
+        int contestRating;
+        if(cntstRate != 0)
+            contestRating = cntstRate;
+        else contestRating = 0;
+
         ShotStrategy strategy;
-        if((getPct() - rating) < 0){
+        if((getPct() - ( rating - (contestRating * 0.2) ) ) < 0){
             strategy = new MadeShotStrategy();
         }
         else {
             strategy = new MissedShotStrategy();
         }
-        return strategy.shoot(p2, shotType, rating, points);
+        return strategy.shoot(p2, shotType,points);
     }
 
-    private int midrangeShot(PlayerV2 p2){
-        return shoot(p2, "midrange shot", midRange, 2);
+    //shot types
+    private int midrangeShot(PlayerV2 p2, int cont){
+        return shoot(p2, "midrange shot", midRange, cont, 2);
     }
 
-    private int threePoint(PlayerV2 p2){
-        return shoot(p2, "three-point shot",threePoint, 3);
+    private int threePoint(PlayerV2 p2, int cont){
+        return shoot(p2, "three-point shot",threePoint, cont, 3);
+    }
+
+    private int layUpBall(PlayerV2 p2, int cont){
+        return shoot(p2, "lay up", layUp, cont, 2);
+    }
+
+    private int dunkBall(PlayerV2 p2, int cont){
+        return shoot(p2, "Dunk", layUp, cont, 2);
     }
 
     //rebound
-    private void reboundBall(PlayerV2 p2){
+    public boolean reboundBall(PlayerV2 p2){
         if((getPct() - rebound) < 0){
-            detailBuilder(getPlayerName() + " got the ball back");
-            return;
+            detailBuilder(getPlayerName() + " rebounds the ball");
+            gainPossessionDef(p2);
+            return true;
+        }
+        else {
+            detailBuilder(p2.getPlayerName() + " got the ball back");
+            return false;
+        }
+    }
+
+    public interface DefStrategy {
+        int defend(PlayerV2 p2, int defStrat, int points);
+    }
+
+    public class Fouled implements DefStrategy {
+        public int defend(PlayerV2 p2, int defStrat, int points){
+            detailBuilder(p2.getPlayerName() + " fouled " + getPlayerName());
+            return 0;
+        }
+    }
+
+    public class stealBall2 implements DefStrategy {
+        public int defend(PlayerV2 p2, int defStrat, int points){
+            detailBuilder(p2.getPlayerName() + " stole the ball");
+            gainPossessionDef(p2);
+            return 0;
+        }
+    }
+
+    public int defend(PlayerV2 p2, int defStrat, int points){
+        DefStrategy strat;
+        if( (getPct()  - (defStrat * 0.5) * 0.2) < 0){
+            strat = new Fouled();
         }
         else{
-            detailBuilder(p2.getPlayerName() + " rebounded the ball");
-            gainPossession(p2);
-            return;
+            if((getPct() - (defStrat * 0.2)) < 0){
+                strat = new stealBall2();
+                gainPossessionDef(p2);
+            }
+            else{
+                return 0;
+            }
         }
+        
+        return strat.defend(p2, defStrat, points);
+    }
+
+    public int trySteal(PlayerV2 p2, int stl){
+        return defend(p2, steal, 0);
     }
 
     //steal 
@@ -147,6 +228,8 @@ public class PlayerV2 {
             else return false;
         }
     }
+
+    //block 
 
     //possession methods
     private void gainPossessionDef(PlayerV2 p2){
