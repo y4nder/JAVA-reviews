@@ -1,2 +1,3 @@
-        System.out.println(p1.getHasBall());
-        System.out.println(p2.getHasBall());
+        BlacktopOnes game1 = new BlacktopOnes();
+        game1.startNewGame(p1, p2);
+        game1.showHightlights();
