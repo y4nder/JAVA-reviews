@@ -1,7 +1,6 @@
 import java.util.Random;
 public class PlayerV2 {
-    private static int Default_Midrange = 60;
-    private static int Default_ThreePoint = 60;
+    private static int Default_VAL = 60;
     private static Random ran = new Random();
     private String playerName;
     private String detailedActions;
@@ -21,13 +20,13 @@ public class PlayerV2 {
 
     public PlayerV2(String name){
         playerName = name;
-        midRange = Default_Midrange;
-        threePoint = Default_ThreePoint;
-        dunk = 60;
-        layUp = 60;
-        steal = 60; 
-        rebound = 60;
-        contest = 60;
+        midRange = Default_VAL;
+        threePoint = Default_VAL;
+        dunk = Default_VAL;
+        layUp = Default_VAL;
+        steal = Default_VAL; 
+        rebound = Default_VAL;
+        contest = Default_VAL;
         hasBall = false;
         detailedActions = "";
         score =  0;

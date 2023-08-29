@@ -22,18 +22,24 @@ public class TournamentSingle {
                 detailAdd(players[j].getPlayerName() + " VS. " + players[j+1].getPlayerName());
                 finals[i] = tourna.startNewGame(players[j], players[j+1]);
                 detailAdd(tourna.getGameDetails());
+                detailAdd(finals[i].getPlayerName() + " ADVANCES!");
+                detailAdd("------------------------------------------------");
                 i++;
                 j+=2;
             }
-            detailAdd("FINALS --> " + finals[0].getPlayerName() + " VS. " + finals[1].getPlayerName());
-            PlayerV2 winner = tourna.startNewGame(finals[0], finals[1]);
-            detailAdd(tourna.getGameDetails());
-            displayParticipants();
-            detailAdd("The winner of the tournament is " + winner.getPlayerName().toUpperCase());
+            startFinals();
         }
         else{
             detailAdd("tournament failed not enough players");
         }
+    }
+
+    private void startFinals(){
+        detailAdd("FINALS --> " + finals[0].getPlayerName() + " VS. " + finals[1].getPlayerName());
+        PlayerV2 winner = tourna.startNewGame(finals[0], finals[1]);
+        detailAdd(tourna.getGameDetails());
+        displayParticipants();
+        detailAdd("The winner of the tournament is " + winner.getPlayerName().toUpperCase());
     }
 
     // settings players
